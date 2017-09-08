@@ -20,9 +20,9 @@ gulp.task('sass', function() {
             environment: production ? "production" : "development"
         }))
         .pipe(gulp.dest('dist/css'))
-        .pipe(p.if(production, p.rename({suffix: '.min'})))
-        .pipe(p.if(production, p.cleanCss({compatibility: 'ie9'})))
-        .pipe(p.if(production, gulp.dest('dist/css')))
+        .pipe(p.if(!production, p.rename({suffix: '.min'})))
+        .pipe(p.if(!production, p.cleanCss({compatibility: 'ie9'})))
+        .pipe(p.if(!production, gulp.dest('dist/css')))
         .pipe(p.notify({ message: 'Styles task complete' }));
 });
 
@@ -44,7 +44,6 @@ gulp.task('media', function() {
     return gulp.src('src/media/**/*')
         .pipe(p.cache(p.imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
         .pipe(gulp.dest('dist/media'))
-        .pipe(p.notify({ message: 'Images task complete' }));
 });
 
 // Font
