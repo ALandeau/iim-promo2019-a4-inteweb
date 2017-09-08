@@ -1,0 +1,112 @@
+@mixin background-setting($position, $size, $repeat: no-repeat){
+  background: {
+    position: $position;
+    size: $size;
+    repeat: $repeat;
+  };
+}
+
+// =============================================================================
+// String Replace
+// =============================================================================
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// =============================================================================
+// Font Face
+// =============================================================================
+
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot otf woff ttf svg) {
+  $src: null;
+
+  $extmods: (
+          eot: "?",
+          svg: "#" + str-replace($name, " ", "_")
+  );
+
+  $formats: (
+          otf: "opentype",
+          ttf: "truetype"
+  );
+
+  @each $ext in $exts {
+    $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+    $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+    $src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
+  }
+
+  @font-face {
+    font-family: quote($name);
+    font-style: $style;
+    font-weight: $weight;
+    src: $src;
+  }
+}
+
+@function calculateRem($size) {
+  $remSize: $size / 16px;
+  @return $remSize * 0.5rem;
+}
+
+@mixin font-size($size) {
+  font-size: $size;
+  font-size: calculateRem($size);
+}
+
+$size-large: 60em;
+$size-medium: 40em;
+$size-small: 30em;
+$size-mid-medium: 900px;
+
+@mixin size-large {
+  @media only screen and (max-width: $size-large) {
+    @content;
+  }
+}
+
+@mixin size-medium {
+  @media only screen and (max-width: $size-medium) {
+    @content;
+  }
+}
+
+@mixin size-small {
+  @media only screen and (max-width: $size-small) {
+    @content;
+  }
+}
+
+@mixin size-mid-medium {
+  @media only screen and (max-width: $size-mid-medium) {
+    @content;
+  }
+}
+
+
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin shadow($select, $args...) {
+  @if $select == "font"{
+    text-shadow: $args;
+  } @else {
+    -webkit-box-shadow: $args;
+    -moz-box-shadow: $args;
+    -o-box-shadow: $args;
+    box-shadow: $args;
+  }
+}
