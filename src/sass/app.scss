@@ -650,33 +650,66 @@ body {
   // TODO: Dispay Burger Nav
   #burger-nav{
     display: none;
-    @include size-medium{
-      position: absolute;
-      z-index: 1000;
-      top: 0; left: 0;
-      width: 100%; min-height: 200px;
-      background-color: #FFFFFF;
-      ul{
-        @include flexbox();
-        @include flex-flow(column nowrap);
-        @include justify-content(center);
-        @include align-items(center);
-        box-sizing: border-box;
-        padding: 25px 0;
-        li{
-          @include flex(1);
+    @include shadow("box", 0px 2px 0px rgba(50, 50, 50, 0.05));
+    position: absolute;
+    z-index: 1000;
+    top: 0; left: 0;
+    width: 100%; min-height: 200px;
+    background-color: #FFFFFF;
+    ul{
+      @include flexbox();
+      @include flex-flow(column nowrap);
+      @include justify-content(center);
+      @include align-items(center);
+      box-sizing: border-box;
+      padding: 25px 0 50px;
+      li{
+        @include flex(1);
+        &:after{
+          content: "";
+          display: block;
+          width: 75%; height: 1px;
+          margin: 25px auto 25px;
+          background-color: #FF343D;
+        }
+        &:last-of-type{
           &:after{
-            content: "";
-            display: block;
-            width: 75%; height: 1px;
-            margin: 25px auto 25px;
-            background-color: #FF343D;
+            background: none;
+            display: none;
           }
-          a{
-            text:{
-              decoration: none;
-            }
-            color: rgba(0, 0, 0, 0.6);
+        }
+        a{
+          text:{
+            decoration: none;
+          }
+          color: rgba(0, 0, 0, 0.6);
+        }
+      }
+    }
+
+    // TODO: Config for close icon
+    #close-burger{
+      width: 80%; height: 60px;
+      margin: auto;
+      @include flexbox();
+      @include flex-flow(column nowrap);
+      @include justify-content(center);
+      @include align-items(flex-end);
+      cursor: pointer;
+      div{
+        position: relative;
+        height: 20px; width: 20px;
+        p{
+          position: absolute;
+          background-color: #FF343D;
+          height: 1px; width: 100%;
+          top: 50%;
+          transform: translateY(-50%);
+          &:first-child{
+            transform: rotate(45deg);
+          }
+          &:last-child{
+            transform: rotate(-45deg);
           }
         }
       }
