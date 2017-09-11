@@ -1,5 +1,11 @@
 "use strict";
 
+/*
+* Node -> 6.9.1
+* Gulp -> 3.9.1
+* Compass -> 1.0.3 (Polaris)
+* */
+
 var gulp = require('gulp'),
     p = require('gulp-load-plugins')(),
     del = require('del');
